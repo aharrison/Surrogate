@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generic Website Title</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+</head>
+<body style="background-color: #F0F0F0">
+<div style="text-align: center">
+<h1>Generic Website Title</h1> 
+<div id="navbar">
+ <%= link_to "Home", '/' %> | <%= link_to "Contact", '/contact' %> | <%= link_to "About", '/about' %>  | <%= link_to "Gallery", images_path %>
+</div>
+
+<%= yield %>
+</div>
+
+</body>
+</html>

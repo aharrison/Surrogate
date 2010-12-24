@@ -9,3 +9,17 @@ two:
   name: MyString
   height: 
   width: 
+
+image_kong_one:
+  name: Image Kong One
+  height:
+  width:
+  album: album_kong
+
+image_kong_two:
+  name: Image Kong Two
+  height:
+  width:
+  album: album_kong  
+
+  

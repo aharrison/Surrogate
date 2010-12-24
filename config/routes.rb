@@ -1,4 +1,6 @@
 Surrogate::Application.routes.draw do
+  resources :albums
+
   resources :images
   resources :posts
 

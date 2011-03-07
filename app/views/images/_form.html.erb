@@ -27,6 +27,7 @@
     <%= f.label 'file' %><br />
     <%= f.file_field 'file' %><br />
   </div>
+  <%= collection_select(:image, :album_id, Album.all, :id, :name, { :include_blank => 'None' }) %>
 
   <div class="actions">
     <%= f.submit %>

@@ -18,22 +18,29 @@ class ImagesControllerTest < ActionController::TestCase
 
   test "should create image" do
     assert_difference('Image.count') do
-      thePath = Rails.root.join('public', 'images', "MyString.jpg")
-      if File.file?(thePath)
-        File.delete(thePath)
-      end
-      assert(!File.file?(thePath))
       attr = @image.attributes
-      attr['file'] = Tempfile.new("somerandomname")
+      attr.delete('id')
+      fa = Tempfile.new('somerandomname')
+      path = Rails.root.join('test', 'fixtures', "test.jpg")
+      File.open(path) do |file|
+        fa.write(file.read)
+      end
+      attr['file'] = fa # fixture_file_upload('test.jpg', 'image/jpeg')
       post :create, :image => attr
+      thePath = Rails.root.join('public', 'images', 
+                                assigns(:image).id.to_s + "_original.jpg")
       assert(File.file?(thePath))
+      assert(File.size?(thePath))
       File.delete(thePath)
 
+      thumbnailPath = thePath.sub(/original/, "thumbnail")
+      assert(File.file?(thumbnailPath))
+      File.delete(thumbnailPath)
     end
-
-
     assert_redirected_to image_path(assigns(:image))
   end
+
+  # TODO: define behavior for attempted empty files uploaded.
 
   test "should show image" do
     get :show, :id => @image.to_param

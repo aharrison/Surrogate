@@ -39,15 +39,11 @@ class ImagesController < ApplicationController
 
   # POST /images
   # POST /images.xml
-  def create
+  def create    
     uploaded_io = params[:image]['file'] 
-    filepath = Rails.root.join('public', 'images', 
-                               params[:image][:name] + '.jpg') 
-    File.open(filepath, 'w') do |file| 
-      file.write(uploaded_io.read) 
-    end 
-
-    params[:image].delete(:file)
+    uploaded_io.rewind
+    params[:image].delete(:file) # avoid Image class creation problems
+    
     @image = Image.new(params[:image])
 
     respond_to do |format|
@@ -67,14 +63,23 @@ class ImagesController < ApplicationController
         }
       end
     end
-
-  end
+    filepath = Rails.root.join('public', 'images', @image.id.to_s + '_original.jpg')
+    File.open(filepath, 'w') do |file| 
+      file.write(uploaded_io.read) 
+    end 
+    image = Magick::Image.read(filepath).first
+    ar = image.x_resolution.to_i / (image.y_resolution.to_i * 1.0)
+    height = ar * 400
+    image.change_geometry!("400x#{height}") { |cols, rows| 
+      image.thumbnail! cols, rows 
+    }
+    image.write(filepath.sub(/original/, "thumbnail"))
+ end
 
   # PUT /images/1
   # PUT /images/1.xml
   def update
     @image = Image.find(params[:id])
-
 
     respond_to do |format|
       if @image.update_attributes(params[:image])

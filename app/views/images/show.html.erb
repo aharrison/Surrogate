@@ -15,8 +15,14 @@
   <%= @image.width %>
 </p>
 
+<p> Album: <%= name = if @image.album then @image.album.name else '' end %> </p>
+
 <p>
-  <img src="/images/<%= @image.name %>.jpg" />
+  <img src="/images/<%= @image.id %>_thumbnail.jpg" />
+</p>
+
+<p>
+  <img src="/images/<%= @image.id %>_original.jpg" />
 </p>
 
 

@@ -1,4 +1,6 @@
 Surrogate::Application.routes.draw do
+  get "gallery/index"
+
   resources :albums
 
   resources :images

@@ -1,8 +1,4 @@
 <h1>Gallery</h1>
-<table>
-  <% @albums.each do |album| %>
-  <tr>
-    <td> <a href="/albums/<%= album.id %>"><%= album.name %></a> </td>
-  </tr>
-  <% end %>
-</table>
+<% @albums.each do |album| %>
+<img src="/images/<%= album.cover_image.id %>_thumbnail.jpg" /></a>
+<% end %>

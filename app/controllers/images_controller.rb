@@ -70,7 +70,7 @@ class ImagesController < ApplicationController
     image = Magick::Image.read(filepath).first
     ar = image.x_resolution.to_i / (image.y_resolution.to_i * 1.0)
     height = ar * 400
-    image.change_geometry!("400x#{height}") { |cols, rows| 
+    image.change_geometry!("#{height}x400") { |cols, rows| 
       image.thumbnail! cols, rows 
     }
     image.write(filepath.sub(/original/, "thumbnail"))

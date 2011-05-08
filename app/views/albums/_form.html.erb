@@ -15,6 +15,7 @@
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
+  <%= collection_select(:album, :cover_image_id, @album.images, :id, :name) %>
   <div class="actions">
     <%= f.submit %>
   </div>

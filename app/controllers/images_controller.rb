@@ -64,7 +64,7 @@ class ImagesController < ApplicationController
       end
     end
     filepath = Rails.root.join('public', 'images', @image.id.to_s + '_original.jpg')
-    File.open(filepath, 'w') do |file| 
+    File.open(filepath, 'wb') do |file| 
       file.write(uploaded_io.read) 
     end 
     image = Magick::Image.read(filepath).first

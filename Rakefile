@@ -4,4 +4,12 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
+module ::Surrogate
+  class Application	
+    include Rake::DSL
+  end
+end
+
 Surrogate::Application.load_tasks
+
+

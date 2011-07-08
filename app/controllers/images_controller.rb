@@ -66,6 +66,7 @@ class ImagesController < ApplicationController
     filepath = Rails.root.join('public', 'images', @image.id.to_s + '_original.jpg')
     File.open(filepath, 'wb') do |file| 
       file.write(uploaded_io.read) 
+      file.close
     end 
     image = Magick::Image.read(filepath).first
     ar = image.x_resolution.to_i / (image.y_resolution.to_i * 1.0)

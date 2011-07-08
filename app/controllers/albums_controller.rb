@@ -14,7 +14,7 @@ class AlbumsController < ApplicationController
   # GET /albums/1.xml
   def show
     @album = Album.find(params[:id])
-
+    @album_images = Image.paginate :conditions => ['album_id = ?', "#{params[:id]}"], :page => params[:page], :order => "id"
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @album }
@@ -25,7 +25,7 @@ class AlbumsController < ApplicationController
   # GET /albums/new.xml
   def new
     @album = Album.new
-
+    
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @album }

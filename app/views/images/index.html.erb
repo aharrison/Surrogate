@@ -1,8 +1,10 @@
 <h1>Listing images</h1>
 
-<table>
+<table style="align: center" border='1' cellpadding='0' cellspacing='0'>
   <tr>
     <th>Name</th>
+    <th>Thumbnail<th>
+    <th>Album</th>
     <th>Height</th>
     <th>Width</th>
     <th></th>
@@ -13,6 +15,7 @@
 <% @images.each do |image| %>
   <tr>
     <td><%= image.name %></td>
+    <td><img src="/images/<%=image.id.to_s + '_thumbnail.jpg' %>" height=100> </td>
     <td><%= image.height %></td>
     <td><%= image.width %></td>
     <td><%= link_to 'Show', image %></td>

@@ -1,8 +1,11 @@
+require 'rack/utils'
 require 'test_helper'
 
 class ImagesControllerTest < ActionController::TestCase
   setup do
     @image = images(:one)
+    @image_no_name = images(:image_no_name)
+    @image_no_name.name = nil
   end
 
   test "should get index" do
@@ -32,6 +35,34 @@ class ImagesControllerTest < ActionController::TestCase
       assert(File.file?(thePath))
       assert(File.size?(thePath))
       File.delete(thePath)
+
+      thumbnailPath = thePath.sub(/original/, "thumbnail")
+      assert(File.file?(thumbnailPath))
+      File.delete(thumbnailPath)
+    end
+    assert_redirected_to image_path(assigns(:image))
+  end
+
+  test "should create image and infer name" do
+    assert_difference('Image.count') do
+      attr = @image_no_name.attributes
+      attr.delete('id')
+
+      path = Rails.root.join('test', 'fixtures', "test.jpg")
+
+      fa = Rack::Test::UploadedFile.new(path)
+
+      attr['file'] = fa # fixture_file_upload('test.jpg', 'image/jpeg')
+      post :create, :image => attr
+      thePath = Rails.root.join('public', 'images', 
+                                assigns(:image).id.to_s + "_original.jpg")
+
+      assert(File.file?(thePath))
+      assert(File.size?(thePath))
+      File.delete(thePath)
+
+      @new_image = Image.find_by_id(assigns(:image).id)
+      assert_equal("test", @new_image.name)
 
       thumbnailPath = thePath.sub(/original/, "thumbnail")
       assert(File.file?(thumbnailPath))

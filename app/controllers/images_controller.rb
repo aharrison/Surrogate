@@ -34,17 +34,32 @@ class ImagesController < ApplicationController
 
   # GET /images/1/edit
   def edit
+    uploaded_io = params['file']
+
     @image = Image.find(params[:id])
+    @image.album_id = params[:album_id]
+    @image.height = params[:height]
+    @image.width = params[:width]
+    
+    if uploaded_io then
+      uploaded_io.rewind
+      save_image(@image.id, uploaded_io)
+    end
   end
 
   # POST /images
   # POST /images.xml
   def create    
     uploaded_io = params[:image]['file'] 
-    uploaded_io.rewind
     params[:image].delete(:file) # avoid Image class creation problems
     
     @image = Image.new(params[:image])
+    if @image.name == nil or @image.name == '' then
+      orig = uploaded_io.original_filename
+      if orig != nil then
+        @image.name = orig.match(/(.*?)\.(.*)/)[1]
+      end
+    end
 
     respond_to do |format|
       if @image.save
@@ -63,7 +78,18 @@ class ImagesController < ApplicationController
         }
       end
     end
-    filepath = Rails.root.join('public', 'images', @image.id.to_s + '_original.jpg')
+    if uploaded_io then
+      uploaded_io.rewind
+      save_image(@image.id, uploaded_io)
+    end
+ end
+
+  # Saves image to public location while generating a thumbnail.
+  # Params:
+  # +id+:: int - id of the image
+  # +uploaded_io+:: File - file handle for the temporary file used in the HTTP GET/POST
+  def save_image(id, uploaded_io)
+    filepath = Rails.root.join('public', 'images', id.to_s + '_original.jpg')
     File.open(filepath, 'wb') do |file| 
       file.write(uploaded_io.read) 
       file.close

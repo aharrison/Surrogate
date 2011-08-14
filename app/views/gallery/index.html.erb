@@ -1,4 +1,6 @@
 <h1>Gallery</h1>
 <% @albums.each do |album| %>
-  <img src="/images/<%= if album.cover_image then album.cover_image.id else 0 end %>_thumbnail.jpg" /></a>
+<a href="/albums/<%= album.id %>">
+  <img src="<%= album.cover_thumbnail_path %>">
+</a>
 <% end %>

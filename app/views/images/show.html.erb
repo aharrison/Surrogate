@@ -1,3 +1,4 @@
+<% if session[:admin] == 'true' then %>
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -21,10 +22,15 @@
   <img src="/images/<%= @image.id %>_thumbnail.jpg" />
 </p>
 
+<% end %>
+
 <p>
   <img src="/images/<%= @image.id %>_original.jpg" />
 </p>
 
+<% if session[:admin] == 'true' then %>
 
 <%= link_to 'Edit', edit_image_path(@image) %> |
 <%= link_to 'Back', images_path %>
+
+<% end %>

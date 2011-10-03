@@ -3,7 +3,7 @@
 <p>
   <%= @album.name %> <br />
   <% @album.images.each do |image| %>
-    <img src="/images/<%=image.id%>_thumbnail.jpg" /></a>
+    <a href="/images/<%=image.id%>"><img src="/images/<%=image.id%>_thumbnail.jpg" /></a>
   <% end %>
 </p>
 <% if session[:admin] == 'true' then %>

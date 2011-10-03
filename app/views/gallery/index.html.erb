@@ -1,6 +1,12 @@
-<h1>Gallery</h1>
+<h1>Portfolio</h1>
 <% @albums.each do |album| %>
-<a href="/albums/<%= album.id %>">
-  <img src="<%= album.cover_thumbnail_path %>">
-</a>
+<table style="display: inline-table;">
+<tr><td>
+  <a href="/albums/<%= album.id %>">
+    <img src="<%= album.cover_thumbnail_path %>">
+  </a>
+  <br />
+  <%= album.name %>
+</tr></td>
+</table>
 <% end %>

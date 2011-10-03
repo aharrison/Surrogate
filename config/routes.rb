@@ -1,4 +1,6 @@
 Surrogate::Application.routes.draw do
+  match "user/login" => "user#new"
+
   get "gallery/index"
 
   resources :albums

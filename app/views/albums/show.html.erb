@@ -6,6 +6,7 @@
     <img src="/images/<%=image.id%>_thumbnail.jpg" /></a>
   <% end %>
 </p>
-
+<% if session[:admin] == 'true' then %>
 <%= link_to 'Edit', edit_album_path(@album) %> |
 <%= link_to 'Back', albums_path %>
+<% end %>

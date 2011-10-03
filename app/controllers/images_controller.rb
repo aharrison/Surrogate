@@ -1,4 +1,6 @@
 class ImagesController < ApplicationController
+  before_filter :authenticate, :except => [:index, :show]
+
   # GET /images
   # GET /images.xml
   def index

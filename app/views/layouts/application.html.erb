@@ -15,6 +15,9 @@
 <%= link_to "About Me", '/about' %> &nbsp; | &nbsp;
 <%= link_to "Portfolio", '/gallery/index' %> &nbsp; | &nbsp; 
 <%= link_to "Contact", '/contact' %>
+<% if session['admin'] == 'true' then %>
+ <br />{ Hello Master } 
+<% end %>
 </div>
 
 <%= yield %>

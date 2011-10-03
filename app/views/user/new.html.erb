@@ -1,3 +1,11 @@
-<h1>User#login</h1>
-render '_form'
-<p>Find me in app/views/user/login.html.erb</p>
+<h1>Login</h1>
+<%= @status %>
+<%= form_tag("/users/login_again", :method => "post") do %>
+  <%= label_tag(:name, "Username:") %>
+  <%= text_field_tag(:name) %> <br />
+  <%= label_tag(:name, "Password:") %>
+  <%= text_field_tag(:password) %> <br />
+  <%= submit_tag("Login") %>
+<% end %>
+
+

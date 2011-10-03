@@ -1,5 +1,6 @@
 Surrogate::Application.routes.draw do
-  match "user/login" => "user#new"
+  get "users/login" => "user#new"
+  post "users/login_again" => "user#post"
 
   get "gallery/index"
 
